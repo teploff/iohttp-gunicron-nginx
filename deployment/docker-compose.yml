@@ -1,0 +1,59 @@
+version: '3.7'
+
+services:
+  app-1:
+    build:
+      context: ../app
+      dockerfile: Dockerfile
+    image: test:test
+    container_name: app-1
+    networks:
+      - app-network
+
+  app-2:
+    build:
+      context: ../app
+      dockerfile: Dockerfile
+    image: test:test
+    container_name: app-2
+    networks:
+      - app-network
+
+  app-3:
+    build:
+      context: ../app
+      dockerfile: Dockerfile
+    image: test:test
+    container_name: app-3
+    networks:
+      - app-network
+
+  app-4:
+    build:
+      context: ../app
+      dockerfile: Dockerfile
+    image: test:test
+    container_name: app-4
+    networks:
+      - app-network
+
+  nginx:
+    build:
+      context: nginx
+      dockerfile: Dockerfile
+    image: nginx:app
+    container_name: nginx-app
+    ports:
+      - '80:80'
+    depends_on:
+      - app-1
+      - app-2
+      - app-3
+      - app-4
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    name: app-network
+    driver: bridge
